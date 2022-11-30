@@ -1,5 +1,10 @@
 {
   "name": "fem_notifications",
+  "author": {
+    "name": "Igo Brasil Monteiro",
+    "email": "igobmonteiro@gmail.com",
+    "url": "https://github.com/igomonteiro"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

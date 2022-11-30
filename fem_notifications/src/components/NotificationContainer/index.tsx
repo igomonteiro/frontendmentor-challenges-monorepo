@@ -29,7 +29,7 @@ const notificationsMock : INotification[] = [
     user: {
       id: 1,
       name: 'Mark Webber',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-mark-webber.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-mark-webber.webp',
     },
     topic: {
       id: 1,
@@ -45,7 +45,7 @@ const notificationsMock : INotification[] = [
     user: {
       id: 2,
       name: 'Angela Gray',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-angela-gray.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-angela-gray.webp',
     },
     topic: {
       id: 2,
@@ -60,7 +60,7 @@ const notificationsMock : INotification[] = [
     user: {
       id: 3,
       name: 'Jacob Thompson',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-jacob-thompson.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-jacob-thompson.webp',
     },
     topic: {
       id: 3,
@@ -76,7 +76,7 @@ const notificationsMock : INotification[] = [
     user: {
       id: 4,
       name: 'Rizky Hasanuddin',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-rizky-hasanuddin.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-rizky-hasanuddin.webp',
     },
     topic: {
       id: 4,
@@ -92,11 +92,11 @@ const notificationsMock : INotification[] = [
     user: {
       id: 5,
       name: 'Kimberly Smith',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-kimberly-smith.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-kimberly-smith.webp',
     },
     topic: {
       id: 5,
-      content: 'https://fem-notifications-two.vercel.app/images/image-chess.webp',
+      content: 'https://igobrm-fem-notifications.vercel.app/images/image-chess.webp',
       type: 'PICTURE',
       interaction: 'COMMENT',
       date: '2022-11-21T13:03:56.854Z',
@@ -108,7 +108,7 @@ const notificationsMock : INotification[] = [
     user: {
       id: 6,
       name: 'Nathan Peterson',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-nathan-peterson.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-nathan-peterson.webp',
     },
     topic: {
       id: 6,
@@ -124,7 +124,7 @@ const notificationsMock : INotification[] = [
     user: {
       id: 7,
       name: 'Anna Kim',
-      avatarUrl: 'https://fem-notifications-two.vercel.app/images/avatar-anna-kim.webp',
+      avatarUrl: 'https://igobrm-fem-notifications.vercel.app/images/avatar-anna-kim.webp',
     },
     topic: {
       id: 7,
