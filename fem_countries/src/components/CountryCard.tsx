@@ -1,16 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { Country } from '../@types/Country';
+import formatNumber from '../utils/formatNumber';
 
 interface ICountryCardProps {
   country: Country;
 }
 
-export function CountryCard({ country : { code, name, flagURL, population, region, capital } }: ICountryCardProps) {
-  const formattedPopulation = Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(population);
+export function CountryCard({ country : { cca2, name, flagURL, population, region, capital } }: ICountryCardProps) {
+  const formattedPopulation = formatNumber(population);
 
   const navigate = useNavigate();
   function handleOnCardClick() {
-    navigate(`/details/${code}`);
+    navigate(`/details/${cca2}`);
   }
 
   return (

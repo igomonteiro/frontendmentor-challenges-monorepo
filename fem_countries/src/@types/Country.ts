@@ -1,5 +1,5 @@
 export type Country = {
-  code: string;
+  cca2: string;
   name: string;
   nativeName: string;
   flagURL: string;
@@ -19,7 +19,7 @@ export type Country = {
   };
   borderCountriesCodes: string[];
   borderCountries?: {
-    code: string;
+    cca2: string;
     name: string;
   }[];
 }

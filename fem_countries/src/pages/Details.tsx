@@ -1,15 +1,17 @@
-import axios from 'axios';
 import { useEffect, useState, useMemo } from 'react';
 import { HiArrowLeft } from 'react-icons/hi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Country } from '../@types/Country';
+import api from '../services/api';
+import formatNumber from '../utils/formatNumber';
 
 export function Details() {
   const { code } = useParams();
   const navigate = useNavigate();
   const [country, setCountry] = useState<Country | null>(null);
 
-  const formattedPopulation = Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(country?.population as number);
+  const formattedPopulation = formatNumber(country?.population as number);
+
   const currencies = useMemo(() => {
     if (country?.currencies) {
       return Object.values(country?.currencies).map(currency => currency.name).join(', ');
@@ -25,11 +27,11 @@ export function Details() {
   useEffect(() => {
     async function fetchCountry() {
       try {
-        const response = await axios.get(`https://restcountries.com/v3.1/alpha/${code}`);
+        const response = await api.get(`/alpha/${code}`);
         const [data] = response.data;
 
         const mappedCountry : Country = {
-          code: data.cca2,
+          cca2: data.cca2,
           name: data.name.common,
           nativeName: data.name.nativeName ? data.name.nativeName[Object.keys(data.name.nativeName)[0]].common : '',
           flagURL: data.flags.svg,
@@ -44,12 +46,12 @@ export function Details() {
         };
 
         const countriesCodes = mappedCountry.borderCountriesCodes.join(',');
-        const response2 = await axios.get(`https://restcountries.com/v3.1/alpha?codes=${countriesCodes}`);
+        const response2 = await api.get(`/alpha?codes=${countriesCodes}`);
 
         const borderCountriesData = response2.data;
 
-        const mappedBorderCountries = borderCountriesData.map((country) => ({
-          code: country.cca2,
+        const mappedBorderCountries = borderCountriesData.map((country: { cca2: string; name: { common: string; }; }) => ({
+          cca2: country.cca2,
           name: country.name.common,
         }));
 
@@ -140,12 +142,12 @@ export function Details() {
             <div className="grid grid-cols-3 gap-2 mt-4 md:mt-0">
               {country?.borderCountries?.map((borderCountry) => (
                 <button
-                  key={borderCountry.code}
+                  key={borderCountry.cca2}
                   type="button"
                   className="text-sm whitespace-nowrap overflow-hidden text-ellipsis text-center h-8 px-6 bg-white dark:bg-brand-blue-700 dark:text-brand-gray-light
                   shadow-md rounded-sm hover:bg-brand-gray-light dark:hover:bg-opacity-60
                   transition-all duration-300"
-                  onClick={() => navigate(`/details/${borderCountry.code}`)}
+                  onClick={() => navigate(`/details/${borderCountry.cca2}`)}
                 >
                   {borderCountry.name}
                 </button>

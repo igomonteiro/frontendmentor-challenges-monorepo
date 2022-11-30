@@ -2,7 +2,7 @@ import { HiSearch } from 'react-icons/hi';
 import { CountryCard } from '../components/CountryCard';
 import { Country } from '../@types/Country';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const REGIONS = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 
@@ -24,12 +24,12 @@ export function Home() {
   }, [countries, filteredByRegion, searchTerm]);
 
   const fetchCountries = useCallback(async () => {
-    const response = await axios.get('https://restcountries.com/v3.1/all');
+    const response = await api.get('/all');
 
     const { data } = response;
 
-    const mappedData : Country[] = data.map((item) => ({
-      code: item.cca2,
+    const mappedData : Country[] = data.map((item: { cca2: any; name: { common: any; nativeName: { [x: string]: { common: any; }; }; }; flags: { png: any; }; population: any; region: any; subregion: any; capital: any[]; tld: any[]; languages: any; currencies: any; borders: any; }) => ({
+      cca2: item.cca2,
       name: item.name.common,
       nativeName: item.name.nativeName ? item.name.nativeName[Object.keys(item.name.nativeName)[0]].common : '',
       flagURL: item.flags.png,
@@ -81,7 +81,7 @@ export function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mt-8 place-items-center">
         {filteredCountries.map((country) => (
           <CountryCard
-            key={country.code}
+            key={country.cca2}
             country={country}
           />
         ))}
