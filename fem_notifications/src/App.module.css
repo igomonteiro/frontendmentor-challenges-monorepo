@@ -1,0 +1,16 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 0px;
+  }
+}
+
+.attribution { margin-top: 8px; font-size: 12px; text-align: center; }
+.attribution a { color: hsl(228, 45%, 44%); }
