@@ -17,7 +17,7 @@ export function CountryCard({ country : { cca2, name, flagURL, population, regio
   return (
     <div
       className="w-80 md:w-full flex flex-col bg-white dark:text-brand-gray-light dark:bg-brand-blue-700
-      h-[320px] shadow-md rounded-md cursor-pointer hover:scale-105 transition-transform duration-300"
+      h-[340px] shadow-md rounded-md cursor-pointer hover:scale-105 transition-transform duration-300"
       onClick={handleOnCardClick}
     >
       <div className="w-full h-40">
