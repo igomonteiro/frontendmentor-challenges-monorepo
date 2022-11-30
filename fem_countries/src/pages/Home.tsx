@@ -57,12 +57,12 @@ export function Home() {
   return (
     <main className="px-4 md:px-20 py-12">
       <header className="flex items-center justify-between flex-wrap">
-        <label htmlFor="search" className="bg-white dark:bg-brand-blue-700 flex items-center gap-4 rounded-md h-14 w-full md:w-[660px] px-6 shadow-sm">
+        <label htmlFor="search" className="bg-white dark:bg-brand-blue-700 flex items-center gap-4 rounded-md h-14 w-full md:w-[480px] px-6 shadow-sm">
           <HiSearch className="text-brand-gray-dark dark:text-brand-gray-light" size={18}/>
           <input
             type="text"
             id="search"
-            className="bg-transparent placeholder:dark:text-brand-gray-light placeholder:text-sm h-14 w-[660px] outline-none dark:text-brand-gray-light"
+            className="bg-transparent placeholder:dark:text-brand-gray-light placeholder:text-sm h-14 w-[480px] outline-none dark:text-brand-gray-light"
             placeholder="Search for a country..."
             maxLength={32}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -71,7 +71,7 @@ export function Home() {
         </label>
 
         {/* border-r -> little trick to pad select arrow right */}
-        <select className="bg-white dark:text-brand-gray-light dark:bg-brand-blue-700 h-11 w-48 px-4 text-sm rounded-md font-semibold shadow-sm border-r-8 border-r-transparent mt-8 md:mt-0" onChange={(e) => setSelectedRegion(e.target.value)} defaultValue="">
+        <select className="bg-white dark:text-brand-gray-light dark:bg-brand-blue-700 h-14 w-48 px-4 text-sm rounded-md font-semibold shadow-sm border-r-8 border-r-transparent mt-8 md:mt-0" onChange={(e) => setSelectedRegion(e.target.value)} defaultValue="">
           <option>Filter by Region</option>
           {REGIONS.map((region) => (
             <option key={region}>{region}</option>

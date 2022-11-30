@@ -16,11 +16,11 @@ export function CountryCard({ country : { cca2, name, flagURL, population, regio
 
   return (
     <div
-      className="w-80 md:w-full flex flex-col dark:text-brand-gray-light dark:bg-brand-blue-700
-      h-[360px] shadow-md rounded-md cursor-pointer hover:scale-105 transition-transform duration-300"
+      className="w-80 md:w-full flex flex-col bg-white dark:text-brand-gray-light dark:bg-brand-blue-700
+      h-[320px] shadow-md rounded-md cursor-pointer hover:scale-105 transition-transform duration-300"
       onClick={handleOnCardClick}
     >
-      <div className="w-full h-44">
+      <div className="w-full h-40">
         <img
           className="w-full h-full object-fill rounded-t-md"
           alt={name}
@@ -28,8 +28,8 @@ export function CountryCard({ country : { cca2, name, flagURL, population, regio
         />
       </div>
 
-      <div className="flex flex-col p-8 gap-1 text-sm">
-        <span className="font-extrabold mb-4 text-base"> { name }</span>
+      <div className="flex flex-col px-8 py-5 gap-1 text-sm">
+        <span className="font-extrabold mb-2 text-base"> { name }</span>
 
         <div className="inline-block">
           <span className="font-semibold">Population:</span>
