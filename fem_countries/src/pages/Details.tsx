@@ -45,21 +45,30 @@ export function Details() {
           borderCountriesCodes: data.borders,
         };
 
-        const countriesCodes = mappedCountry.borderCountriesCodes.join(',');
-        const response2 = await api.get(`/alpha?codes=${countriesCodes}`);
+        const countriesCodes = mappedCountry.borderCountriesCodes?.join(',');
 
-        const borderCountriesData = response2.data;
+        if (countriesCodes) {
+          const response2 = await api.get(`/alpha?codes=${countriesCodes}`);
 
-        const mappedBorderCountries = borderCountriesData.map((country: { cca2: string; name: { common: string; }; }) => ({
-          cca2: country.cca2,
-          name: country.name.common,
-        }));
+          const borderCountriesData = response2.data;
 
-        setCountry({
+          const mappedBorderCountries = borderCountriesData.map((country: { cca2: string; name: { common: string; }; }) => ({
+            cca2: country.cca2,
+            name: country.name.common,
+          }));
+
+          return setCountry({
+            ...mappedCountry,
+            borderCountries: mappedBorderCountries
+          });
+        }
+
+        return setCountry({
           ...mappedCountry,
-          borderCountries: mappedBorderCountries
+          borderCountries: []
         });
       } catch(err) {
+        console.log(err);
         setCountry(null);
       }
     }
@@ -67,7 +76,7 @@ export function Details() {
   }, [code]);
 
   return (
-    <main className="px-8 md:px-16 py-10">
+    <main className="px-4 md:px-20 py-12">
       <button
         type="button"
         className="flex items-center justify-between gap-2
@@ -137,23 +146,25 @@ export function Details() {
             </section>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-center mt-12">
-            <span className="font-semibold mr-4">Border Countries:</span>
-            <div className="grid grid-cols-3 gap-2 mt-4 md:mt-0">
-              {country?.borderCountries?.map((borderCountry) => (
-                <button
-                  key={borderCountry.cca2}
-                  type="button"
-                  className="text-sm whitespace-nowrap overflow-hidden text-ellipsis text-center h-8 px-6 bg-white dark:bg-brand-blue-700 dark:text-brand-gray-light
+          {country?.borderCountries?.length ? (
+            <div className="flex flex-col md:flex-row md:items-center mt-12">
+              <span className="font-semibold mr-4">Border Countries:</span>
+              <div className="grid grid-cols-3 gap-2 mt-4 md:mt-0">
+                {country?.borderCountries?.map((borderCountry) => (
+                  <button
+                    key={borderCountry.cca2}
+                    type="button"
+                    className="text-sm whitespace-nowrap overflow-hidden text-ellipsis text-center h-8 px-6 bg-white dark:bg-brand-blue-700 dark:text-brand-gray-light
                   shadow-md rounded-sm hover:bg-brand-gray-light dark:hover:bg-opacity-60
                   transition-all duration-300"
-                  onClick={() => navigate(`/details/${borderCountry.cca2}`)}
-                >
-                  {borderCountry.name}
-                </button>
-              ))}
+                    onClick={() => navigate(`/details/${borderCountry.cca2}`)}
+                  >
+                    {borderCountry.name}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </main>
