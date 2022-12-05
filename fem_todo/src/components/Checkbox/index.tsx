@@ -11,7 +11,7 @@ type CheckboxProps = {
 export function Checkbox({ title, checked, onChange}: CheckboxProps) {
   return (
     <CheckboxContainer>
-      <HiddenCheckbox onChange={onChange} defaultChecked={checked} />
+      <HiddenCheckbox role="button" onChange={onChange} defaultChecked={checked} />
       <StyledCheckbox onClick={onChange} checked={checked}>
         {checked && <img src={CheckIcon} alt="Check"/>}
       </StyledCheckbox>
