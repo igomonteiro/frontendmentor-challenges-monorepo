@@ -1,65 +1,42 @@
 import { ActionButton } from '../../components/ActionButton';
 import { Todo } from '../../components/Todo';
 import { Todo as TodoType } from '../../@types/Todo';
-import { Actions, Container, Footer, Header, Input, TodoContainer, TodoList } from './styles';
-import { useMemo, useState } from 'react';
+import { Actions, Container, Footer, Header, Input, OuterFooter, TodoContainer, TodoList } from './styles';
+import { FormEvent, useMemo, useState } from 'react';
 import { ThemeToggler } from '../../components/ThemeToggler';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
 const todosMock: TodoType[] = [
   {
-    id: 1,
+    id: uuidv4(),
+    title: 'Complete online JavaScript course',
+    completed: true
+  },
+  {
+    id: uuidv4(),
     title: 'Jog around the park 3x',
-    completed: false,
-    order: 1
+    completed: false
   },
   {
-    id: 2,
-    title: 'Go to the midnight party',
-    completed: false,
-    order: 2
+    id: uuidv4(),
+    title: '10 minutes meditation',
+    completed: false
   },
   {
-    id: 3,
-    title: 'Testing',
-    completed: true,
-    order: 3
+    id: uuidv4(),
+    title: 'Read for 1 hour',
+    completed: false
   },
   {
-    id: 4,
-    title: 'Teste123 123 456 798',
-    completed: true,
-    order: 4
+    id: uuidv4(),
+    title: 'Pick up groceries',
+    completed: false
   },
   {
-    id: 5,
-    title: 'Take a walk with my cat',
-    completed: true,
-    order: 5
-  },
-  {
-    id: 6,
-    title: 'Dinner with friends',
-    completed: true,
-    order: 6
-  },
-  {
-    id: 7,
-    title: 'Dinner with friends',
-    completed: true,
-    order: 7
-  },
-  {
-    id: 8,
-    title: 'Dinner with friends',
-    completed: true,
-    order: 8
-  },
-  {
-    id: 9,
-    title: 'Dinner with friends',
-    completed: true,
-    order: 9
+    id: uuidv4(),
+    title: 'Complete Todo App on Frontend Mentor',
+    completed: false
   }
 ];
 
@@ -71,6 +48,7 @@ enum FilterEnum {
 
 export function Home() {
   const [todos, setTodos] = useState<TodoType[]>(todosMock);
+  const [newTodoTitle, setNewTodoTitle] = useState('');
   const [currentFilter, setCurrentFilter] = useState<FilterEnum>(FilterEnum.All);
   const [activeAction, setActiveAction] = useState(0);
 
@@ -83,7 +61,9 @@ export function Home() {
     return todos;
   }, [currentFilter, todos]);
 
-  function handleOnChange(id: number) {
+  const leftTodosCount = useMemo(() =>  todos.filter(todo => !todo.completed).length, [todos]);
+
+  function handleOnChange(id: string) {
     const mapTodos = todos.map((todo) => {
       if (todo.id === id) {
         return {
@@ -98,7 +78,20 @@ export function Home() {
     setTodos(mapTodos);
   }
 
-  function handleRemove(id: number) {
+  function handleCreateTodo(e: FormEvent) {
+    e.preventDefault();
+    if (!newTodoTitle) return;
+
+    const newTodo: TodoType = {
+      id: uuidv4(),
+      title: newTodoTitle,
+      completed: false
+    };
+
+    setTodos(prevState => [newTodo, ...prevState]);
+  }
+
+  function handleRemove(id: string) {
     setTodos(todos.filter(todo => todo.id !== id));
   }
 
@@ -124,9 +117,20 @@ export function Home() {
   function handleOnDragEnd(result: DropResult) {
     if (!result.destination) return;
 
-    const [reorderedItem] = todos.splice(result.source.index, 1);
-    todos.splice(result.destination.index, 0, reorderedItem);
-    setTodos(todos);
+    // easy order if the list isn't filtered, just get the reordered item and add it to it's new index
+    if (currentFilter === FilterEnum.All) {
+      const toOrderTodos = todos;
+      const [reorderedItem] = toOrderTodos.splice(result.source.index, 1);
+      toOrderTodos.splice(result.destination.index, 0, reorderedItem);
+      return setTodos(toOrderTodos);
+    }
+
+    // when filtered, not working properly!
+    const toOrderTodos = filteredTodos;
+    const [reorderedItem] = filteredTodos.splice(result.source.index, 1);
+    toOrderTodos.splice(result.destination.index, 0, reorderedItem);
+
+    return setTodos(toOrderTodos);
   }
 
   return (
@@ -136,7 +140,9 @@ export function Home() {
         <ThemeToggler/>
       </Header>
 
-      <Input placeholder="Create a new todo..." />
+      <form onSubmit={handleCreateTodo}>
+        <Input onChange={(e) => setNewTodoTitle(e.target.value)} placeholder="Create a new todo..." />
+      </form>
 
       <TodoContainer>
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -144,7 +150,7 @@ export function Home() {
             {(provided) => (
               <TodoList {...provided.droppableProps} ref={provided.innerRef}>
                 {filteredTodos.map((todo, index) => (
-                  <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
+                  <Draggable key={todo.id} draggableId={todo.id} index={index}>
                     {(provided) => (
                       <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                         <Todo
@@ -163,7 +169,7 @@ export function Home() {
         </DragDropContext>
 
         <Footer>
-          <span>5 items left</span>
+          <span>{ leftTodosCount } items left</span>
 
           <Actions>
             <ActionButton
@@ -195,6 +201,29 @@ export function Home() {
           />
         </Footer>
       </TodoContainer>
+
+      <OuterFooter>
+        <ActionButton
+          weight="bold"
+          title="All"
+          active={activeAction === 0}
+          onClick={handleAllFilter}
+        />
+
+        <ActionButton
+          weight="bold"
+          title="Active"
+          active={activeAction === 1}
+          onClick={handleActiveFilter}
+        />
+
+        <ActionButton
+          weight="bold"
+          title="Completed"
+          active={activeAction === 2}
+          onClick={handleCompletedFilter}
+        />
+      </OuterFooter>
       <span>Drag and drop to reorder list</span>
     </Container>
   );

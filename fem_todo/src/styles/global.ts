@@ -18,7 +18,7 @@ export const GlobalStyles = createGlobalStyle`
     transition: background 0.2s ease-in, color 0.2s ease-in;
   }
 
-  @media screen and (min-width: 375px) {
+  @media screen and (min-width: 376px) {
     body {
       background-image: url(${({ theme}) => theme.backgroundUrl.desktop });
     }

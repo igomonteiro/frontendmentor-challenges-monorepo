@@ -8,8 +8,16 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
 
+
   button {
     background: transparent;
     border: none;
+    opacity: 0;
+  }
+
+  &:hover {
+    button {
+      opacity: 1;
+    }
   }
 `;

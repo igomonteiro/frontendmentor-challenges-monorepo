@@ -9,6 +9,7 @@ export const Button = styled.button<ButtonProps>`
   border: 0;
   background: transparent;
   font-weight: ${({ weight }) => weight };
+  font-size: 14px;
   color: ${({ theme, active }) => active ? theme.colors.primary.main : theme.colors.neutral[500] };
 
   &:hover {
